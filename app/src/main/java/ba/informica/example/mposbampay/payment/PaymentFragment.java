@@ -39,6 +39,7 @@ import ba.informica.example.mposbampay.reader.ReaderManager;
 import ba.informica.example.mposbampay.view.AmountEntryView;
 import ba.informica.example.mposbampay.view.NumberPadView;
 import ba.informica.example.mposbampay.view.PaymentIdEntryView;
+import ba.informica.example.mposbampay.view.SoapResponseView;
 
 /**
  * Created by nedim on 12/10/15.
@@ -396,9 +397,10 @@ public class PaymentFragment extends Fragment
             /*Intent intent = new Intent(getActivity(), ConnectEMVReader.class);
             startActivity(intent);*/
 
+            ArrayList<String> resp = new ArrayList<String>();
             if (mReader.isOpened() && mReader.getState(0) == 2) {
                 ReaderManager rm = new ReaderManager(mReader);
-                ArrayList<String> resp = new ArrayList<String>();
+
                 resp = rm.readCard();
                 Toast toast = Toast.makeText(getActivity().getBaseContext(), "Resp: " + resp.get(resp.size() - 1), Toast.LENGTH_SHORT);
                 toast.show();
@@ -407,6 +409,10 @@ public class PaymentFragment extends Fragment
                 Toast toast = Toast.makeText(getActivity().getBaseContext(), "Please insert card into reader!!!", Toast.LENGTH_SHORT);
                 toast.show();
             }
+
+            Intent i = new Intent(getActivity().getBaseContext(), SoapResponseView.class);
+            i.putExtra("card_data", resp);
+            startActivity(i);
 
         }
     }
