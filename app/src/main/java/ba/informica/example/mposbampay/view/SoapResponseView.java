@@ -29,6 +29,7 @@ public class SoapResponseView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soap_response_view);
+        Log.i("SoapResponse", "In the onCreate: ");
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -43,7 +44,7 @@ public class SoapResponseView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                getCel = celcius.getText().toStrgfing();
+                getCel = celcius.getText().toString();
                 AsyncCallWS task = new AsyncCallWS();
                 task.execute();
             }
@@ -73,14 +74,15 @@ public class SoapResponseView extends AppCompatActivity {
     }
 
     public void calculate() {
-        String SOAP_ACTION = "http://www.w3schools.com/webservices/CelsiusToFahrenheit";
-        String METHOD_NAME = "CelsiusToFahrenheit";
-        String NAMESPACE = "http://www.w3schools.com/webservices/";
-        String URL = "http://www.w3schools.com/webservices/tempconvert.asmx";
+        String SOAP_ACTION = "";
+        String METHOD_NAME = "hello";
+        String NAMESPACE = "";//http://mPosWSExample.ws.informica.ba/";
+        String URL = "http://192.168.0.106:8080/mPosWSExample/WSInterface?wsdl";
+        Log.i("SoapResponse", "In the calculate method: ");
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("Celsius", getCel);
+            Request.addProperty("arg0", getCel);
 
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             soapEnvelope.dotNet = true;
@@ -91,7 +93,7 @@ public class SoapResponseView extends AppCompatActivity {
             transport.call(SOAP_ACTION, soapEnvelope);
             resultString = (SoapPrimitive) soapEnvelope.getResponse();
 
-            Log.i(TAG, "Result Celsius: " + resultString);
+            Log.i(TAG, "Result: " + resultString);
         } catch (Exception ex) {
             Log.e(TAG, "Error: " + ex.getMessage());
         }
