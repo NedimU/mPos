@@ -74,15 +74,15 @@ public class SoapResponseView extends AppCompatActivity {
     }
 
     public void calculate() {
-        String SOAP_ACTION = "";
-        String METHOD_NAME = "hello";
-        String NAMESPACE = "";//http://mPosWSExample.ws.informica.ba/";
-        String URL = "http://192.168.0.106:8080/mPosWSExample/WSInterface?wsdl";
+        String SOAP_ACTION = "WSInterface";
+        String METHOD_NAME = "getMessage";
+        String NAMESPACE = "http://mPosWSExample.ws.informica.ba/";
+        String URL = "http://192.168.238.101:8080/ExampleWS/WSInterface?wsdl";
         Log.i("SoapResponse", "In the calculate method: ");
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("arg0", getCel);
+            //Request.addProperty("arg0", getCel);
 
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             soapEnvelope.dotNet = true;
