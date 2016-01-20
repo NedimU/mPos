@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -33,7 +34,7 @@ public class SoapResponseView extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String cardData = extras.getString("card_data");
+            //String cardData = extras.getString("card_data");
         }
 
         bt = (Button) findViewById(R.id.bt);
@@ -74,18 +75,23 @@ public class SoapResponseView extends AppCompatActivity {
     }
 
     public void calculate() {
-        String SOAP_ACTION = "WSInterface";
-        String METHOD_NAME = "getMessage";
+        String SOAP_ACTION = "";//"WSInterface";
+        String METHOD_NAME = "hello";
         String NAMESPACE = "http://mPosWSExample.ws.informica.ba/";
-        String URL = "http://192.168.238.101:8080/ExampleWS/WSInterface?wsdl";
+        String URL = "http://192.168.0.106:8080/mPosWSExample/WSInterface?wsdl";
         Log.i("SoapResponse", "In the calculate method: ");
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            //Request.addProperty("arg0", getCel);
+            Request.addProperty("helloTo", getCel);
+
+            /*PropertyInfo p = new PropertyInfo();
+            p.setName("helloTo");
+            p.setValue(getCel);
+            p.setType(String.class);
+            Request.addProperty(p);*/
 
             SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            soapEnvelope.dotNet = true;
             soapEnvelope.setOutputSoapObject(Request);
 
             HttpTransportSE transport = new HttpTransportSE(URL);
