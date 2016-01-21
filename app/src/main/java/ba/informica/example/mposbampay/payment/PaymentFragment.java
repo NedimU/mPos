@@ -36,6 +36,7 @@ import ba.informica.example.mposbampay.BamPayApplication;
 import ba.informica.example.mposbampay.CurrencyProvider;
 import ba.informica.example.mposbampay.CurrencySelectorDialog;
 import ba.informica.example.mposbampay.R;
+import ba.informica.example.mposbampay.reader.ReaderManager;
 import ba.informica.example.mposbampay.view.AmountEntryView;
 import ba.informica.example.mposbampay.view.NumberPadView;
 import ba.informica.example.mposbampay.view.PaymentIdEntryView;
@@ -400,11 +401,11 @@ public class PaymentFragment extends Fragment
             ArrayList<String> resp = new ArrayList<String>();
             if (mReader.isOpened() && mReader.getState(0) == 2) {
                 Log.i("PaymentFragment", "Log in if statemant...!");
-                /*ReaderManager rm = new ReaderManager(mReader);
+                ReaderManager rm = new ReaderManager(mReader);
 
                 resp = rm.readCard();
                 Toast toast = Toast.makeText(getActivity().getBaseContext(), "Resp: " + resp.get(resp.size() - 1), Toast.LENGTH_SHORT);
-                toast.show();*/
+                toast.show();
             }
             else {
                 Toast toast = Toast.makeText(getActivity().getBaseContext(), "Please insert card into reader!!!", Toast.LENGTH_SHORT);

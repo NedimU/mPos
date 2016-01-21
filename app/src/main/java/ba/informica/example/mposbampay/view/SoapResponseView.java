@@ -16,6 +16,8 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.util.ArrayList;
+
 import ba.informica.example.mposbampay.R;
 
 public class SoapResponseView extends AppCompatActivity {
@@ -25,17 +27,20 @@ public class SoapResponseView extends AppCompatActivity {
     EditText celcius;
     String getCel;
     SoapPrimitive resultString;
+    ArrayList<String> cData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soap_response_view);
         Log.i("SoapResponse", "In the onCreate: ");
+        cData = new ArrayList<String>();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            //String cardData = extras.getString("card_data");
+            cData = extras.getStringArrayList("card_data");
         }
+        Log.i("Data: ", cData.get(cData.size() - 1));
 
         bt = (Button) findViewById(R.id.bt);
         celcius = (EditText) findViewById(R.id.cel);
@@ -76,14 +81,15 @@ public class SoapResponseView extends AppCompatActivity {
 
     public void calculate() {
         String SOAP_ACTION = "";//"WSInterface";
-        String METHOD_NAME = "hello";
+        String METHOD_NAME = "parseData";
         String NAMESPACE = "http://mPosWSExample.ws.informica.ba/";
         String URL = "http://192.168.0.106:8080/mPosWSExample/WSInterface?wsdl";
         Log.i("SoapResponse", "In the calculate method: ");
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("helloTo", getCel);
+            Request.addProperty("data", cData.get(0));
+            Request.addProperty("data", cData.get(1));
 
             /*PropertyInfo p = new PropertyInfo();
             p.setName("helloTo");
