@@ -1,8 +1,8 @@
 package ba.informica.example.mposbampay.view;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -83,13 +82,14 @@ public class SoapResponseView extends AppCompatActivity {
         String SOAP_ACTION = "";//"WSInterface";
         String METHOD_NAME = "parseData";
         String NAMESPACE = "http://mPosWSExample.ws.informica.ba/";
-        String URL = "http://192.168.0.106:8080/mPosWSExample/WSInterface?wsdl";
+        String URL = "http://192.168.238.101:8080/mPosWSExample/WSInterface?wsdl";
         Log.i("SoapResponse", "In the calculate method: ");
 
         try {
             SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
-            Request.addProperty("data", cData.get(0));
-            Request.addProperty("data", cData.get(1));
+            for (int i = 0; i < cData.size(); i++) {
+                Request.addProperty("data", cData.get(i));
+            }
 
             /*PropertyInfo p = new PropertyInfo();
             p.setName("helloTo");
